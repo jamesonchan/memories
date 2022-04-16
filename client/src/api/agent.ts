@@ -10,7 +10,7 @@ const requests = {
 };
 
 const Posts = {
-  getPosts: () => requests.get("/posts"),
+  getPosts: () => requests.get<Posts[]>("/posts"),
 };
 
 const agent = {
