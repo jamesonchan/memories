@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js";
 
 // @desc fetch all posts
@@ -16,8 +17,14 @@ export const getPosts = async (req, res) => {
 // @route POST /api/posts
 // @access Public
 export const createPosts = async (req, res) => {
-  const { post } = req.body;
-  const newPost = new PostMessage(post);
+  const { title, message, selectedFile, creator, tags } = req.body;
+  const newPost = new PostMessage({
+    title,
+    message,
+    selectedFile,
+    creator,
+    tags,
+  });
 
   try {
     await newPost.save();
@@ -25,4 +32,21 @@ export const createPosts = async (req, res) => {
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
+};
+
+//@desc update posts
+// @route patch /api/posts/:id
+// @access Public
+export const updatePosts = async (req, res) => {
+  const { id: _id } = req.params;
+  const post = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send("No post with that id");
+
+  const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {
+    new: true,
+  });
+
+  res.json(updatedPost);
 };

@@ -1,7 +1,7 @@
 import { PostAction, PostActionType } from "../../actionTypes/postActionTypes";
 
 interface PostListState {
-  posts: Posts[];
+  posts: Post[];
   loading: boolean;
   error: string | null;
 }

@@ -10,7 +10,10 @@ const requests = {
 };
 
 const Posts = {
-  getPosts: () => requests.get<Posts[]>("/posts"),
+  getPosts: () => requests.get<Post[]>("/posts"),
+  createPosts: (newPost: Post) => requests.post<Post>("/posts", newPost),
+  updatePosts: (updatedPost: Post) =>
+    requests.put<Post>(`/posts/${updatedPost._id}`, updatedPost),
 };
 
 const agent = {
