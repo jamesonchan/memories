@@ -3,11 +3,11 @@ import agent from "../../../api/agent";
 import { PostAction, PostActionType } from "../../actionTypes/postActionTypes";
 
 const updatePost =
-  (newPost: Post) => async (dispatch: Dispatch<PostAction>) => {
+  (updatedPost: Post) => async (dispatch: Dispatch<PostAction>) => {
     try {
       dispatch({ type: PostActionType.POST_UPDATE_REQUEST });
 
-      await agent.Posts.updatePosts(newPost);
+      await agent.Posts.updatePosts(updatedPost);
 
       dispatch({ type: PostActionType.POST_UPDATE_SUCCESS });
     } catch (error: any) {

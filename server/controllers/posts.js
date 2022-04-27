@@ -13,6 +13,19 @@ export const getPosts = async (req, res) => {
   }
 };
 
+// @desc fetch post by id
+// @route GET /api/posts/:id
+// @access Public
+export const getPostById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const postMessage = await PostMessage.findById(id);
+    res.status(200).json(postMessage);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 // @desc create posts
 // @route POST /api/posts
 // @access Public

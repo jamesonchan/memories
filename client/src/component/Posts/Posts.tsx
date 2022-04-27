@@ -8,6 +8,7 @@ const Posts = () => {
   const { posts, loading } = useAppSelector((state) => state.postList);
   const classes = useStyles();
 
+
   return loading ? (
     <CircularProgress />
   ) : (

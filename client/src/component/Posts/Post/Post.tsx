@@ -12,6 +12,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import moment from "moment";
 import React from "react";
 import useStyles from "./styles";
+import { useDispatch } from "react-redux";
+import viewPostDetail from "../../../redux/actions/postActions/postDetailAction";
 
 interface Props {
   post: Post;
@@ -19,6 +21,15 @@ interface Props {
 
 const Post = ({ post }: Props) => {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+
+  const viewDetailById = () => {
+    if (post._id) {
+      dispatch(viewPostDetail(post._id));
+    }
+  };
+
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -33,7 +44,11 @@ const Post = ({ post }: Props) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: "white" }} size="small" onClick={() => {}}>
+        <Button
+          style={{ color: "white" }}
+          size="small"
+          onClick={viewDetailById}
+        >
           <MoreHorizIcon fontSize="default" />
         </Button>
       </div>

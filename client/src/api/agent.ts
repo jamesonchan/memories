@@ -11,6 +11,8 @@ const requests = {
 
 const Posts = {
   getPosts: () => requests.get<Post[]>("/posts"),
+  getPostById: (selectedPostId: string) =>
+    requests.get<Post>(`/posts/${selectedPostId}`),
   createPosts: (newPost: Post) => requests.post<Post>("/posts", newPost),
   updatePosts: (updatedPost: Post) =>
     requests.put<Post>(`/posts/${updatedPost._id}`, updatedPost),

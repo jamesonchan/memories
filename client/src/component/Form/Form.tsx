@@ -1,9 +1,13 @@
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "./styles";
 import FileBase from "react-file-base64";
 import { useDispatch } from "react-redux";
 import createPost from "../../redux/actions/postActions/postCreateAction";
+import { useAppSelector } from "../../redux/typedReduxHook";
+import updatePost from "../../redux/actions/postActions/postUpdateAction";
+import loadPostList from "../../redux/actions/postActions/postListAction";
+import { PostActionType } from "../../redux/actionTypes/postActionTypes";
 
 const Form = () => {
   const dispatch = useDispatch();
@@ -18,10 +22,37 @@ const Form = () => {
 
   const classes = useStyles();
 
+  const { post, loading } = useAppSelector((state) => state.postDetail);
+  const { success: successUpdate } = useAppSelector(
+    (state) => state.postUpdate
+  );
+  const { success: successCreate } = useAppSelector(
+    (state) => state.postCreate
+  );
+
+  useEffect(() => {
+    if (post) {
+      setPostData(post);
+    }
+  }, [post]);
+
+  useEffect(() => {
+    if (successUpdate || successCreate) {
+      dispatch(loadPostList());
+      dispatch({ type: PostActionType.POST_UPDATE_RESET });
+      dispatch({ type: PostActionType.POST_CREATE_RESET });
+    }
+  }, [successUpdate, successCreate, dispatch]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(createPost(postData));
-    setPostData(initialPost);
+    if (post) {
+      const updatedPost = { ...postData, id: post._id };
+      dispatch(updatePost(updatedPost));
+    } else {
+      dispatch(createPost(postData));
+      setPostData(initialPost);
+    }
   };
 
   const handleChange = (
@@ -34,7 +65,10 @@ const Form = () => {
     });
   };
 
-  const clear = () => {};
+  const clear = () => {
+    if (post) return;
+    else setPostData(initialPost);
+  };
 
   return (
     <Paper className={classes.paper}>

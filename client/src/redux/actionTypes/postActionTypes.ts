@@ -12,6 +12,11 @@ export enum PostActionType {
   POST_UPDATE_SUCCESS = "post_update_success",
   POST_UPDATE_FAIL = "post_update_fail",
   POST_UPDATE_RESET = "post_update_reset",
+
+  POST_DETAIL_REQUEST = "post_Detail_request",
+  POST_DETAIL_SUCCESS = "post_Detail_success",
+  POST_DETAIL_FAIL = "post_Detail_fail",
+  POST_DETAIL_RESET = "post_Detail_reset",
 }
 
 // get posts list actions
@@ -65,6 +70,25 @@ interface PostUpdateResetAction {
   type: PostActionType.POST_UPDATE_RESET;
 }
 
+// view post detail by id
+interface PostDetailRequestAction {
+  type: PostActionType.POST_DETAIL_REQUEST;
+}
+
+interface PostDetailSuccessAction {
+  type: PostActionType.POST_DETAIL_SUCCESS;
+  payload: Post;
+}
+
+interface PostDetailFailAction {
+  type: PostActionType.POST_DETAIL_FAIL;
+  payload: string;
+}
+
+interface PostDetailResetAction {
+  type: PostActionType.POST_DETAIL_RESET;
+}
+
 export type PostAction =
   | PostListRequestAction
   | PostListSuccessAction
@@ -76,4 +100,8 @@ export type PostAction =
   | PostUpdateRequestAction
   | PostUpdateSuccessAction
   | PostUpdateFailAction
-  | PostUpdateResetAction;
+  | PostUpdateResetAction
+  | PostDetailRequestAction
+  | PostDetailSuccessAction
+  | PostDetailFailAction
+  | PostDetailResetAction;

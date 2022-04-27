@@ -23,6 +23,8 @@ const postCreateReducer = (
       return { ...state, loading: false, success: true };
     case PostActionType.POST_CREATE_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case PostActionType.POST_CREATE_RESET:
+      return { ...state, success: false };
     default:
       return state;
   }
