@@ -2,6 +2,7 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import postCreateReducer from "./reducers/postReducers/postCreateReducer";
+import postDeleteReducer from "./reducers/postReducers/postDeleteReducer";
 import postDetailReducer from "./reducers/postReducers/postDetailReducer";
 import postListReducer from "./reducers/postReducers/postListReducer";
 import postUpdateReducer from "./reducers/postReducers/postUpdateReducer";
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   postCreate: postCreateReducer,
   postUpdate: postUpdateReducer,
   postDetail: postDetailReducer,
+  postDelete: postDeleteReducer,
 });
 
 const initialState = {};

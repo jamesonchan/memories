@@ -13,10 +13,15 @@ export enum PostActionType {
   POST_UPDATE_FAIL = "post_update_fail",
   POST_UPDATE_RESET = "post_update_reset",
 
-  POST_DETAIL_REQUEST = "post_Detail_request",
-  POST_DETAIL_SUCCESS = "post_Detail_success",
-  POST_DETAIL_FAIL = "post_Detail_fail",
-  POST_DETAIL_RESET = "post_Detail_reset",
+  POST_DETAIL_REQUEST = "post_detail_request",
+  POST_DETAIL_SUCCESS = "post_detail_success",
+  POST_DETAIL_FAIL = "post_detail_fail",
+  POST_DETAIL_RESET = "post_detail_reset",
+
+  POST_DELETE_REQUEST = "post_delete_request",
+  POST_DELETE_SUCCESS = "post_delete_success",
+  POST_DELETE_FAIL = "post_delete_fail",
+  POST_DELETE_RESET = "post_delete_reset",
 }
 
 // get posts list actions
@@ -89,6 +94,24 @@ interface PostDetailResetAction {
   type: PostActionType.POST_DETAIL_RESET;
 }
 
+// delete post by id
+interface PostDeleteRequestAction {
+  type: PostActionType.POST_DELETE_REQUEST;
+}
+
+interface PostDeleteSuccessAction {
+  type: PostActionType.POST_DELETE_SUCCESS;
+}
+
+interface PostDeleteFailAction {
+  type: PostActionType.POST_DELETE_FAIL;
+  payload: string;
+}
+
+interface PostDeleteResetAction {
+  type: PostActionType.POST_DELETE_RESET;
+}
+
 export type PostAction =
   | PostListRequestAction
   | PostListSuccessAction
@@ -104,4 +127,8 @@ export type PostAction =
   | PostDetailRequestAction
   | PostDetailSuccessAction
   | PostDetailFailAction
-  | PostDetailResetAction;
+  | PostDetailResetAction
+  | PostDeleteRequestAction
+  | PostDeleteSuccessAction
+  | PostDeleteFailAction
+  | PostDeleteResetAction;
