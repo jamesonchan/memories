@@ -1,20 +1,16 @@
-import { Container, AppBar, Typography, Grow, Grid } from "@material-ui/core";
+import { AppBar, Container, Grid, Grow, Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Form from "./component/Form/Form";
 import Posts from "./component/Posts/Posts";
 import LogoImg from "./images/memories.png";
 import loadPostList from "./redux/actions/postActions/postListAction";
-import { useAppSelector } from "./redux/typedReduxHook";
 import useStyles from "./styles";
 
 function App() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { posts } = useAppSelector((state) => state.postList);
 
-  console.log(posts);
-  
   useEffect(() => {
     dispatch(loadPostList());
   }, [dispatch]);
@@ -35,6 +31,7 @@ function App() {
       <Grow in>
         <Container>
           <Grid
+            className={classes.mainContainer}
             container
             justify="space-between"
             alignItems="stretch"

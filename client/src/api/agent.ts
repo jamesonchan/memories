@@ -18,6 +18,8 @@ const Posts = {
     requests.put<Post>(`/posts/${updatedPost._id}`, updatedPost),
   deletePostById: (deletePostId: string) =>
     requests.delete(`/posts/${deletePostId}`),
+  likePostById: (likedPost: Post) =>
+    requests.put<Post>(`/posts/${likedPost._id}/likePost`, likedPost),
 };
 
 const agent = {

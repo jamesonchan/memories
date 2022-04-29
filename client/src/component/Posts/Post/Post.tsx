@@ -18,6 +18,7 @@ import deletePostById from "../../../redux/actions/postActions/postDeleteAction"
 import { useAppSelector } from "../../../redux/typedReduxHook";
 import { PostActionType } from "../../../redux/actionTypes/postActionTypes";
 import loadPostList from "../../../redux/actions/postActions/postListAction";
+import likePost from "../../../redux/actions/postActions/postLikeAction";
 
 interface Props {
   post: Post;
@@ -32,6 +33,8 @@ const Post = ({ post }: Props) => {
     (state) => state.postDelete
   );
 
+  const { success: successLike } = useAppSelector((state) => state.postLike);
+
   const viewDetailById = () => {
     if (post._id) {
       dispatch(viewPostDetail(post._id));
@@ -44,12 +47,19 @@ const Post = ({ post }: Props) => {
     }
   };
 
+  const likePostById = () => {
+    if (post._id) {
+      dispatch(likePost(post));
+    }
+  };
+
   useEffect(() => {
-    if (successDelete) {
+    if (successDelete || successLike) {
       dispatch(loadPostList());
       dispatch({ type: PostActionType.POST_DELETE_RESET });
+      dispatch({ type: PostActionType.POST_LIKE_RESET });
     }
-  }, [successDelete, dispatch]);
+  }, [successDelete, successLike, dispatch]);
 
   return (
     <Card className={classes.card}>
@@ -76,20 +86,29 @@ const Post = ({ post }: Props) => {
 
       <div className={classes.details}>
         <Typography variant="body2" color="textSecondary">
-          {post.tags.map((tag) => `#${tag}`)}
+          {post.tags.map((tag) => ` #${tag}`)}
         </Typography>
       </div>
 
+      <Typography className={classes.title} variant="h5" gutterBottom>
+        {post.title}
+      </Typography>
+
       <CardContent>
-        <Typography className={classes.title} variant="h5" gutterBottom>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          gutterBottom
+        >
           {post.message}
         </Typography>
       </CardContent>
 
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() => {}}>
+        <Button size="small" color="primary" onClick={likePostById}>
           <ThumbUpAltIcon fontSize="small" />
-          Like {``}
+         &nbsp; Like &nbsp;
           {post.likeCount}
         </Button>
         <Button size="small" color="primary" onClick={deletePost}>

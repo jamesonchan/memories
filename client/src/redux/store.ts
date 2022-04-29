@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import postCreateReducer from "./reducers/postReducers/postCreateReducer";
 import postDeleteReducer from "./reducers/postReducers/postDeleteReducer";
 import postDetailReducer from "./reducers/postReducers/postDetailReducer";
+import postLikeReducer from "./reducers/postReducers/postLikeReducer";
 import postListReducer from "./reducers/postReducers/postListReducer";
 import postUpdateReducer from "./reducers/postReducers/postUpdateReducer";
 
@@ -13,6 +14,7 @@ const reducer = combineReducers({
   postUpdate: postUpdateReducer,
   postDetail: postDetailReducer,
   postDelete: postDeleteReducer,
+  postLike: postLikeReducer,
 });
 
 const initialState = {};

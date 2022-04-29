@@ -22,6 +22,11 @@ export enum PostActionType {
   POST_DELETE_SUCCESS = "post_delete_success",
   POST_DELETE_FAIL = "post_delete_fail",
   POST_DELETE_RESET = "post_delete_reset",
+
+  POST_LIKE_REQUEST = "post_like_request",
+  POST_LIKE_SUCCESS = "post_like_success",
+  POST_LIKE_FAIL = "post_like_fail",
+  POST_LIKE_RESET = "post_like_reset",
 }
 
 // get posts list actions
@@ -112,6 +117,24 @@ interface PostDeleteResetAction {
   type: PostActionType.POST_DELETE_RESET;
 }
 
+// like post by id
+interface PostLikeRequestAction {
+  type: PostActionType.POST_LIKE_REQUEST;
+}
+
+interface PostLikeSuccessAction {
+  type: PostActionType.POST_LIKE_SUCCESS;
+}
+
+interface PostLikeFailAction {
+  type: PostActionType.POST_LIKE_FAIL;
+  payload: string;
+}
+
+interface PostLikeResetAction {
+  type: PostActionType.POST_LIKE_RESET;
+}
+
 export type PostAction =
   | PostListRequestAction
   | PostListSuccessAction
@@ -131,4 +154,8 @@ export type PostAction =
   | PostDeleteRequestAction
   | PostDeleteSuccessAction
   | PostDeleteFailAction
-  | PostDeleteResetAction;
+  | PostDeleteResetAction
+  | PostLikeRequestAction
+  | PostLikeSuccessAction
+  | PostLikeFailAction
+  | PostLikeResetAction;

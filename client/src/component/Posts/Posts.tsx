@@ -1,17 +1,14 @@
-import { CircularProgress, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { useAppSelector } from "../../redux/typedReduxHook";
 import Post from "./Post/Post";
 import useStyles from "./styles";
 
 const Posts = () => {
-  const { posts, loading } = useAppSelector((state) => state.postList);
+  const { posts } = useAppSelector((state) => state.postList);
   const classes = useStyles();
 
-
-  return loading ? (
-    <CircularProgress />
-  ) : (
+  return (
     <Grid
       className={classes.mainContainer}
       container
