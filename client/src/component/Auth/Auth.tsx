@@ -9,10 +9,18 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import React, { useState } from "react";
 import Input from "./Input";
+import GoogleLogin, { GoogleLoginResponse } from "react-google-login";
 import useStyles from "./styles";
+import Icon from "./Icon";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions/authActions/authLoginAction";
+import { useAppSelector } from "../../redux/typedReduxHook";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [showPassowrd, setShowPassowrd] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
@@ -27,6 +35,19 @@ const Auth = () => {
   const switchMode = () => {
     setIsSignup((isSignup) => !isSignup);
     setShowPassowrd(false);
+  };
+
+  const googleSuccess = async (res: GoogleLoginResponse) => {
+    const profileObj = res.profileObj;
+    const token = res.tokenId;
+    const authData = { profileObj, token };
+
+    dispatch(login(authData));
+    navigate("/");
+  };
+
+  const googleFailure = () => {
+    console.log("Google sign in was unsuccessful");
   };
 
   return (
@@ -87,6 +108,26 @@ const Auth = () => {
           >
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
+          <GoogleLogin
+            clientId="395964187815-jthb9dicrae410qf1oi1scr0aul9oqeg.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <Button
+                className={classes.googleButton}
+                color="primary"
+                fullWidth
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                startIcon={<Icon />}
+                variant="contained"
+              >
+                Google Sign In
+              </Button>
+            )}
+            onSuccess={googleSuccess as any}
+            onFailure={googleFailure}
+            cookiePolicy="single_host_origin"
+          />
+
           <Grid container justify="flex-end">
             <Grid item>
               <Button onClick={switchMode}>

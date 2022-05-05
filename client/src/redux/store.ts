@@ -1,6 +1,8 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
+import authLoginReducer from "./reducers/authReducers/authLoginReducer";
+import authLogoutReducer from "./reducers/authReducers/authLogoutReducer";
 import postCreateReducer from "./reducers/postReducers/postCreateReducer";
 import postDeleteReducer from "./reducers/postReducers/postDeleteReducer";
 import postDetailReducer from "./reducers/postReducers/postDetailReducer";
@@ -15,6 +17,8 @@ const reducer = combineReducers({
   postDetail: postDetailReducer,
   postDelete: postDeleteReducer,
   postLike: postLikeReducer,
+  authLogin: authLoginReducer,
+  authLogout: authLogoutReducer,
 });
 
 const initialState = {};
