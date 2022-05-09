@@ -1,40 +1,36 @@
 import { AuthAction, AuthActionType } from "../../actionTypes/authActionTypes";
 
-
-
-interface AuthLoginState {
-  authData: AuthData | null;
+// auth custom signin reducer
+interface AuthSignupState {
   loading: boolean;
   success: boolean;
   error: string | null;
 }
 
-const initialLoginState: AuthLoginState = {
-  authData: null,
+const initialSignupState: AuthSignupState = {
   loading: false,
   error: null,
   success: false,
 };
 
-const authLoginReducer = (
-  state: AuthLoginState = initialLoginState,
+const authSignupReducer = (
+  state: AuthSignupState = initialSignupState,
   action: AuthAction
-): AuthLoginState => {
+): AuthSignupState => {
   switch (action.type) {
-    case AuthActionType.AUTH_LOGIN_REQUEST:
+    case AuthActionType.AUTH_SIGNUP_REQUEST:
       return { ...state, loading: true };
-    case AuthActionType.AUTH_LOGIN_SUCCESS:
+    case AuthActionType.AUTH_SIGNUP_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
-        authData: action.payload,
       };
-    case AuthActionType.AUTH_LOGIN_FAIL:
+    case AuthActionType.AUTH_SIGNUP_FAIL:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-export default authLoginReducer;
+export default authSignupReducer;

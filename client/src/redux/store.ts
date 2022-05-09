@@ -3,6 +3,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import authLoginReducer from "./reducers/authReducers/authLoginReducer";
 import authLogoutReducer from "./reducers/authReducers/authLogoutReducer";
+import authSigninReducer from "./reducers/authReducers/authSigninReducer";
+import authSignupReducer from "./reducers/authReducers/authSignupReducer";
 import postCreateReducer from "./reducers/postReducers/postCreateReducer";
 import postDeleteReducer from "./reducers/postReducers/postDeleteReducer";
 import postDetailReducer from "./reducers/postReducers/postDetailReducer";
@@ -19,6 +21,8 @@ const reducer = combineReducers({
   postLike: postLikeReducer,
   authLogin: authLoginReducer,
   authLogout: authLogoutReducer,
+  authSignin: authSigninReducer,
+  authSignup: authSignupReducer,
 });
 
 const initialState = {};

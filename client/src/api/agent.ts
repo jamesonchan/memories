@@ -22,8 +22,16 @@ const Posts = {
     requests.put<Post>(`/posts/${likedPost._id}/likePost`, likedPost),
 };
 
+const Users = {
+  signIn: (formData: SignInForm) =>
+    requests.post<CustomUser>("/users/signin", formData),
+  signUp: (formData: SignUpForm) =>
+    requests.post<CustomUser>("/users/signup", formData),
+};
+
 const agent = {
   Posts,
+  Users,
 };
 
 export default agent;

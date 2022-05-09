@@ -9,13 +9,32 @@ interface Post {
   createdAt?: Date;
 }
 
-interface ProfileObj {
-  googleId: string;
-  imageUrl: string;
+interface SignUpForm {
+  firstName: string;
+  lastName: string;
   email: string;
-  name: string;
-  givenName: string;
-  familyName: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface SignInForm {
+  email: string;
+  password: string;
+}
+
+interface CustomUser {
+  token: string;
+  password?: string;
+  result: ProfileObj;
+}
+
+interface ProfileObj {
+  googleId?: string;
+  imageUrl?: string;
+  email: string;
+  name?: string;
+  givenName?: string;
+  familyName?: string;
 }
 
 interface AuthData {

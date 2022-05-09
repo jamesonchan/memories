@@ -16,6 +16,8 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/actions/authActions/authLoginAction";
 import { useAppSelector } from "../../redux/typedReduxHook";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../../redux/actions/authActions/authSignupAction";
+import { signin } from "../../redux/actions/authActions/authSigninAction";
 
 const initialFormState = {
   firstName: "",
@@ -34,12 +36,17 @@ const Auth = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialFormState);
 
+  console.log(formData);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // actions to be implemented
     if (isSignup) {
-      
+      dispatch(signup(formData));
+      navigate("/");
     } else {
+      // dispatch(signin(formData));
+      // navigate("/");
     }
   };
 

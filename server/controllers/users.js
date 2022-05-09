@@ -36,21 +36,21 @@ export const signin = async (req, res) => {
 // @route POST /api/users/signup
 // @access Private
 export const signup = async (req, res) => {
-  const { email, passsword, confirmPassword, firstName, lastName } = req.body;
+  const { email, password, confirmPassword, firstName, lastName } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "user already existed" });
 
-    if (passsword !== confirmPassword)
+    if (password !== confirmPassword)
       return res.status(400).json({ message: "passwords do not match" });
 
-    const hashedPassword = await bcrypt.hash(passsword, 12);
+    const hashedPassword = await bcrypt.hash(password, 12);
 
     const result = await User.create({
       email,
-      passsword: hashedPassword,
+      password: hashedPassword,
       name: `${firstName} ${lastName}`,
     });
 

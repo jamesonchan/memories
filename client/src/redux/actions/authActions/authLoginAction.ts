@@ -7,7 +7,7 @@ export const login =
     try {
       dispatch({ type: AuthActionType.AUTH_LOGIN_REQUEST });
       dispatch({ type: AuthActionType.AUTH_LOGIN_SUCCESS, payload: authData });
-      localStorage.setItem("profile", JSON.stringify(authData));
+      localStorage.setItem("googleProfile", JSON.stringify(authData));
     } catch (error: any) {
       dispatch({ type: AuthActionType.AUTH_LOGIN_FAIL, payload: error });
     }

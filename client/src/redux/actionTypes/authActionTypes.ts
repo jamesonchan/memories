@@ -8,9 +8,17 @@ export enum AuthActionType {
   AUTH_LOGOUT_REQUEST = "auth_logout_request",
   AUTH_LOGOUT_SUCCESS = "auth_logout_success",
   AUTH_LOGOUT_FAIL = "auth_logout_fail",
+
+  AUTH_SIGNIN_REQUEST = "auth_signin_request",
+  AUTH_SIGNIN_SUCCESS = "auth_signin_success",
+  AUTH_SIGNIN_FAIL = "auth_signin_fail",
+
+  AUTH_SIGNUP_REQUEST = "auth_signup_request",
+  AUTH_SIGNUP_SUCCESS = "auth_signup_success",
+  AUTH_SIGNUP_FAIL = "auth_signup_fail",
 }
 
-// auth login actions
+// auth google login actions
 interface AuthLoginRequestAction {
   type: AuthActionType.AUTH_LOGIN_REQUEST;
 }
@@ -25,7 +33,7 @@ interface AuthLoginFailAction {
   payload: string;
 }
 
-// auth logout actions
+// auth google logout actions
 interface AuthLogoutRequestAction {
   type: AuthActionType.AUTH_LOGOUT_REQUEST;
 }
@@ -39,10 +47,46 @@ interface AuthLogoutFailAction {
   payload: string;
 }
 
+// auth custom signin actions
+interface AuthSigninRequestAction {
+  type: AuthActionType.AUTH_SIGNIN_REQUEST;
+}
+
+interface AuthSigninSuccessAction {
+  type: AuthActionType.AUTH_SIGNIN_SUCCESS;
+  payload: CustomUser;
+}
+
+interface AuthSigninFailAction {
+  type: AuthActionType.AUTH_SIGNIN_FAIL;
+  payload: string;
+}
+
+// auth custom signup actions
+interface AuthSignupRequestAction {
+  type: AuthActionType.AUTH_SIGNUP_REQUEST;
+}
+
+interface AuthSignupSuccessAction {
+  type: AuthActionType.AUTH_SIGNUP_SUCCESS;
+  payload: CustomUser;
+}
+
+interface AuthSignupFailAction {
+  type: AuthActionType.AUTH_SIGNUP_FAIL;
+  payload: string;
+}
+
 export type AuthAction =
   | AuthLoginRequestAction
   | AuthLoginSuccessAction
   | AuthLoginFailAction
   | AuthLogoutRequestAction
   | AuthLogoutSuccessAction
-  | AuthLogoutFailAction;
+  | AuthLogoutFailAction
+  | AuthSigninRequestAction
+  | AuthSigninSuccessAction
+  | AuthSigninFailAction
+  | AuthSignupRequestAction
+  | AuthSignupSuccessAction
+  | AuthSignupFailAction;

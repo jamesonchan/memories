@@ -10,19 +10,32 @@ const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
-  const storageUser =
+  const storageGoogleUser =
+    JSON.parse(localStorage.getItem("googleProfile") as string) || null;
+  const storageCustomUser =
     JSON.parse(localStorage.getItem("profile") as string) || null;
-  const [user, setUser] = useState<AuthData | null>(storageUser);
+  const [customUser, setCustomUser] = useState<CustomUser | null>(
+    storageCustomUser
+  );
+  const [googleUser, setGoogleUser] = useState<AuthData | null>(
+    storageGoogleUser
+  );
 
   const logoutUser = () => {
-    if (user) {
+    if (customUser || googleUser) {
       dispatch(logout());
     }
-    setUser(null);
+    setCustomUser(null);
+    setGoogleUser(null);
   };
 
   useEffect(() => {
-    setUser(storageUser);
+    if (storageCustomUser) {
+      setCustomUser(storageCustomUser);
+    }
+    if (storageGoogleUser) {
+      setGoogleUser(storageGoogleUser);
+    }
   }, [location]);
 
   return (
@@ -45,13 +58,21 @@ const Navbar = () => {
         />
       </div>
       <Toolbar component={Link} to="/auth" className={classes.toolbar}>
-        {user ? (
+        {customUser || googleUser ? (
           <div className={classes.profile}>
             <Avatar className={classes.purple} alt="user.result.name">
-              {user.profileObj.familyName}{" "}
+              {customUser
+                ? customUser.result.name
+                : googleUser
+                ? googleUser.profileObj.familyName
+                : null}{" "}
             </Avatar>
             <Typography className={classes.userName} variant="inherit">
-              {user.profileObj.name}
+              {customUser
+                ? customUser.result.name
+                : googleUser
+                ? googleUser.profileObj.name
+                : null}
             </Typography>
             <Button
               variant="contained"
