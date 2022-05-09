@@ -17,6 +17,14 @@ import { login } from "../../redux/actions/authActions/authLoginAction";
 import { useAppSelector } from "../../redux/typedReduxHook";
 import { useNavigate } from "react-router-dom";
 
+const initialFormState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -24,10 +32,22 @@ const Auth = () => {
 
   const [showPassowrd, setShowPassowrd] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState(initialFormState);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // actions to be implemented
+    if (isSignup) {
+      
+    } else {
+    }
+  };
 
-  const handleChange = () => {};
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleShowPassword = () =>
     setShowPassowrd((showPassword) => !showPassword);
@@ -64,14 +84,14 @@ const Auth = () => {
                 <Input
                   name="firstName"
                   label="First Name"
-                  handleChange={handleChange}
+                  handleChange={handleChange as any}
                   autoFocus
                   half
                 />
                 <Input
-                  name="firstName"
-                  label="First Name"
-                  handleChange={handleChange}
+                  name="lastName"
+                  label="Last Name"
+                  handleChange={handleChange as any}
                   autoFocus
                   half
                 />
@@ -80,13 +100,13 @@ const Auth = () => {
             <Input
               name="email"
               label="Email Address"
-              handleChange={handleChange}
+              handleChange={handleChange as any}
               type="email"
             />
             <Input
               name="password"
               label="Password"
-              handleChange={handleChange}
+              handleChange={handleChange as any}
               type={showPassowrd ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
@@ -94,7 +114,7 @@ const Auth = () => {
               <Input
                 name="confirmPassword"
                 label="Repeat Password"
-                handleChange={handleChange}
+                handleChange={handleChange as any}
                 type="password"
               />
             )}
