@@ -10,10 +10,12 @@ const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
-  const storageGoogleUser =
-    JSON.parse(localStorage.getItem("googleProfile") as string) || null;
-  const storageCustomUser =
-    JSON.parse(localStorage.getItem("profile") as string) || null;
+  const storageGoogleUser = JSON.parse(
+    localStorage.getItem("googleProfile") as string
+  );
+  const storageCustomUser = JSON.parse(
+    localStorage.getItem("profile") as string
+  );
   const [customUser, setCustomUser] = useState<CustomUser | null>(
     storageCustomUser
   );
@@ -30,13 +32,16 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (storageCustomUser) {
-      setCustomUser(storageCustomUser);
-    }
     if (storageGoogleUser) {
       setGoogleUser(storageGoogleUser);
     }
-  }, [location]);
+  }, [location, storageGoogleUser]);
+
+  useEffect(() => {
+    if (storageCustomUser) {
+      setCustomUser(storageCustomUser);
+    }
+  }, [location, storageCustomUser]);
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">

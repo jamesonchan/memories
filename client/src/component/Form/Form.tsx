@@ -12,7 +12,6 @@ import { PostActionType } from "../../redux/actionTypes/postActionTypes";
 const Form = () => {
   const dispatch = useDispatch();
   const initialPost: Post = {
-    creator: "",
     title: "",
     message: "",
     tags: [""],
@@ -21,6 +20,8 @@ const Form = () => {
   const [postData, setPostData] = useState(initialPost);
 
   const classes = useStyles();
+
+  const user = JSON.parse(localStorage.getItem("profile") as string);
 
   const { post, loading } = useAppSelector((state) => state.postDetail);
   const { success: successUpdate } = useAppSelector(
@@ -50,7 +51,7 @@ const Form = () => {
       const updatedPost = { ...postData, id: post._id };
       dispatch(updatePost(updatedPost));
     } else {
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
       setPostData(initialPost);
     }
   };
@@ -70,6 +71,16 @@ const Form = () => {
     else setPostData(initialPost);
   };
 
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please Sign In to create your own memories and like ohter memories
+        </Typography>
+      </Paper>
+    );
+  }
+
   return (
     <Paper className={classes.paper}>
       <form
@@ -79,14 +90,6 @@ const Form = () => {
         onSubmit={handleSubmit}
       >
         <Typography variant="h6">Creating a Memory</Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={postData.creator}
-          onChange={handleChange}
-        />
         <TextField
           name="title"
           variant="outlined"

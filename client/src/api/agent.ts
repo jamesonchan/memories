@@ -2,6 +2,18 @@ import axios from "axios";
 
 axios.defaults.baseURL = "/api";
 
+const profile = localStorage.getItem("profile");
+const googlePorfile = localStorage.getItem("googleProfile");
+
+axios.interceptors.request.use((req) => {
+  if (profile || googlePorfile) {
+    req.headers.Authorization = `Bearer ${
+      profile ? JSON.parse(profile) : JSON.parse(googlePorfile as string)
+    }`;
+  }
+  return req;
+});
+
 const requests = {
   get: <T>(url: string) => axios.get<T>(url),
   post: <T>(url: string, body: {}) => axios.post<T>(url, body),

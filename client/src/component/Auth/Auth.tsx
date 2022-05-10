@@ -36,7 +36,6 @@ const Auth = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialFormState);
 
-  console.log(formData);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,8 +44,8 @@ const Auth = () => {
       dispatch(signup(formData));
       navigate("/");
     } else {
-      // dispatch(signin(formData));
-      // navigate("/");
+      dispatch(signin(formData));
+      navigate("/");
     }
   };
 

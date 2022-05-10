@@ -30,13 +30,11 @@ export const getPostById = async (req, res) => {
 // @route POST /api/posts
 // @access Public
 export const createPosts = async (req, res) => {
-  const { title, message, selectedFile, creator, tags } = req.body;
+  const post = req.body;
   const newPost = new PostMessage({
-    title,
-    message,
-    selectedFile,
-    creator,
-    tags,
+    ...post,
+    creator: req.userId,
+    createdAt: new Date().toISOString(),
   });
 
   try {

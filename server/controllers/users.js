@@ -6,7 +6,7 @@ import User from "../models/user.js";
 // @route POST /api/users/signin
 // @access Private
 export const signin = async (req, res) => {
-  const { email, passsword } = req.body;
+  const { email, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -14,8 +14,8 @@ export const signin = async (req, res) => {
       return res.status(404).json({ message: "user does not exist" });
 
     const isPasswordCorrect = await bcrypt.compare(
-      passsword,
-      existingUser.passsword
+      password,
+      existingUser.password
     );
     if (!isPasswordCorrect)
       return res.status(400).json({ message: "Invalid credentials" });
