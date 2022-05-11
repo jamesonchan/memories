@@ -25,9 +25,12 @@ const authSignupReducer = (
         ...state,
         loading: false,
         success: true,
+        
       };
     case AuthActionType.AUTH_SIGNUP_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case AuthActionType.AUTH_SIGNIN_RESET:
+      return { ...state, success: false };
     default:
       return state;
   }

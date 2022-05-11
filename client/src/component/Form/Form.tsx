@@ -21,7 +21,10 @@ const Form = () => {
 
   const classes = useStyles();
 
-  const user = JSON.parse(localStorage.getItem("profile") as string);
+  const { signinUser: customUser } = useAppSelector(
+    (state) => state.authSignin
+  );
+  const { authData: googleUser } = useAppSelector((state) => state.authLogin);
 
   const { post, loading } = useAppSelector((state) => state.postDetail);
   const { success: successUpdate } = useAppSelector(
@@ -51,7 +54,7 @@ const Form = () => {
       const updatedPost = { ...postData, id: post._id };
       dispatch(updatePost(updatedPost));
     } else {
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      dispatch(createPost({ ...postData, name: customUser?.result?.name }));
       setPostData(initialPost);
     }
   };
@@ -71,17 +74,7 @@ const Form = () => {
     else setPostData(initialPost);
   };
 
-  if (!user?.result?.name) {
-    return (
-      <Paper className={classes.paper}>
-        <Typography variant="h6" align="center">
-          Please Sign In to create your own memories and like ohter memories
-        </Typography>
-      </Paper>
-    );
-  }
-
-  return (
+  return customUser || googleUser ? (
     <Paper className={classes.paper}>
       <form
         autoComplete="off"
@@ -145,6 +138,12 @@ const Form = () => {
           Clear
         </Button>
       </form>
+    </Paper>
+  ) : (
+    <Paper className={classes.paper}>
+      <Typography variant="h6" align="center">
+        Please Sign In to create your own memories and like ohter memories
+      </Typography>
     </Paper>
   );
 };

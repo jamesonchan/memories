@@ -1,47 +1,27 @@
 import { AppBar, Avatar, Button, Toolbar, Typography } from "@material-ui/core";
-import LogoImg from "../../images/memories.png";
-import { Link, useLocation } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import useStyles from "./styles";
+import React from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import LogoImg from "../../images/memories.png";
 import { logout } from "../../redux/actions/authActions/authLogoutAction";
+import { useAppSelector } from "../../redux/typedReduxHook";
+import useStyles from "./styles";
 
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const storageGoogleUser = JSON.parse(
-    localStorage.getItem("googleProfile") as string
+
+  const { signinUser: customUser } = useAppSelector(
+    (state) => state.authSignin
   );
-  const storageCustomUser = JSON.parse(
-    localStorage.getItem("profile") as string
-  );
-  const [customUser, setCustomUser] = useState<CustomUser | null>(
-    storageCustomUser
-  );
-  const [googleUser, setGoogleUser] = useState<AuthData | null>(
-    storageGoogleUser
-  );
+
+  const { authData: googleUser } = useAppSelector((state) => state.authLogin);
 
   const logoutUser = () => {
     if (customUser || googleUser) {
       dispatch(logout());
     }
-    setCustomUser(null);
-    setGoogleUser(null);
   };
-
-  useEffect(() => {
-    if (storageGoogleUser) {
-      setGoogleUser(storageGoogleUser);
-    }
-  }, [location, storageGoogleUser]);
-
-  useEffect(() => {
-    if (storageCustomUser) {
-      setCustomUser(storageCustomUser);
-    }
-  }, [location, storageCustomUser]);
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">

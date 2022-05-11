@@ -25,7 +25,18 @@ const reducer = combineReducers({
   authSignup: authSignupReducer,
 });
 
-const initialState = {};
+const storageCustomUser = localStorage.getItem("profile")
+  ? JSON.parse(localStorage.getItem("profile") as string)
+  : null;
+
+const storageGoogleUser = localStorage.getItem("googleProfile")
+  ? JSON.parse(localStorage.getItem("googleProfile") as string)
+  : null;
+
+const initialState = {
+  authSignin: { signinUser: storageCustomUser } as any,
+  authLogin: { authData: storageGoogleUser } as any,
+};
 
 const middleware = [thunk];
 

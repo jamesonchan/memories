@@ -31,6 +31,8 @@ const authSigninReducer = (
       };
     case AuthActionType.AUTH_SIGNIN_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case AuthActionType.AUTH_SIGNIN_RESET:
+      return { ...state, signinUser: null };
     default:
       return state;
   }

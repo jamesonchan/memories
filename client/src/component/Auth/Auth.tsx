@@ -7,7 +7,7 @@ import {
   Button,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "./Input";
 import GoogleLogin, { GoogleLoginResponse } from "react-google-login";
 import useStyles from "./styles";
@@ -18,6 +18,7 @@ import { useAppSelector } from "../../redux/typedReduxHook";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../../redux/actions/authActions/authSignupAction";
 import { signin } from "../../redux/actions/authActions/authSigninAction";
+import { AuthActionType } from "../../redux/actionTypes/authActionTypes";
 
 const initialFormState = {
   firstName: "",
@@ -36,18 +37,28 @@ const Auth = () => {
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialFormState);
 
+  const { success: successSignUp } = useAppSelector(
+    (state) => state.authSignup
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // actions to be implemented
     if (isSignup) {
       dispatch(signup(formData));
-      navigate("/");
     } else {
       dispatch(signin(formData));
       navigate("/");
     }
   };
+
+  useEffect(() => {
+    if (successSignUp) {
+      dispatch(signin(formData));
+      dispatch({ type: AuthActionType.AUTH_SIGNUP_RESET });
+      navigate("/");
+    }
+  }, [successSignUp, dispatch, formData, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

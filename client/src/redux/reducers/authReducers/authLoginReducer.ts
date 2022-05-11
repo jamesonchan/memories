@@ -1,7 +1,5 @@
 import { AuthAction, AuthActionType } from "../../actionTypes/authActionTypes";
 
-
-
 interface AuthLoginState {
   authData: AuthData | null;
   loading: boolean;
@@ -32,6 +30,8 @@ const authLoginReducer = (
       };
     case AuthActionType.AUTH_LOGIN_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case AuthActionType.AUTH_LOGIN_RESET:
+      return { ...state, authData: null };
     default:
       return state;
   }
